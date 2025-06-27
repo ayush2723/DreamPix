@@ -1,0 +1,668 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 98.5%;
+    --foreground: 240 10% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 240 10% 4%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 94%;
+    --secondary-foreground: 240 10% 4%;
+
+    --muted: 240 5% 94%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 240 5% 94%;
+    --accent-foreground: 240 10% 4%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 10% 4%;
+
+    --radius: 1.25rem;
+
+    /* Theme Engine Specific Custom Tokens */
+    --bg-dark: 240 10% 4%;
+    --bg-light: 240 10% 98.5%;
+    --panel-glass: rgba(255, 255, 255, 0.45);
+    --border-glass: rgba(0, 0, 0, 0.05);
+    --primary-indigo: 240 84% 62%;
+    --accent-cyan: 180 84% 45%;
+    --accent-violet: 270 80% 64%;
+  }
+
+  .dark {
+    --background: 240 16% 5.5%;
+    --foreground: 240 10% 98%;
+
+    --card: 240 12% 7%;
+    --card-foreground: 240 10% 98%;
+
+    --popover: 240 12% 7%;
+    --popover-foreground: 240 10% 98%;
+
+    --primary: 240 10% 98%;
+    --primary-foreground: 240 10% 4%;
+
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 240 10% 98%;
+
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 6% 12%;
+    --accent-foreground: 240 10% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 240 10% 98%;
+
+    --border: 240 6% 14%;
+    --input: 240 6% 14%;
+    --ring: 240 10% 98%;
+
+    /* Theme Engine Specific Custom Tokens */
+    --bg-dark: 240 16% 5.5%;
+    --bg-light: 240 10% 98.5%;
+    --panel-glass: rgba(10, 11, 20, 0.55);
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --primary-indigo: 240 84% 62%;
+    --accent-cyan: 180 84% 45%;
+    --accent-violet: 270 80% 64%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-300;
+  }
+  body {
+    @apply bg-background text-foreground font-PlusJakarta antialiased selection:bg-primary-indigo/30 overflow-x-hidden;
+  }
+
+  /* Custom Sleek Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-glass rounded-full hover:bg-primary-indigo/30 transition-all;
+  }
+}
+
+/* ========================================== CORE LAYOUT SHELL */
+.auth {
+  @apply flex justify-center items-center min-h-screen w-full bg-gradient-to-br from-indigo-50/20 via-background to-purple-50/20 dark:from-indigo-950/10 dark:to-purple-950/10;
+}
+
+.root {
+  @apply flex min-h-screen w-full flex-col bg-background text-foreground lg:flex-row transition-colors duration-300 relative overflow-hidden;
+}
+
+/* Dynamic Radial Ambient Glows with Stacking order constraints */
+.root::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, hsl(var(--primary-indigo) / 0.12) 0%, transparent 70%);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -20;
+  opacity: 0.8;
+}
+
+.root::after {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, hsl(var(--accent-violet) / 0.12) 0%, transparent 70%);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -10;
+  opacity: 0.8;
+}
+
+.root-container {
+  @apply flex-1 overflow-y-auto px-4 py-8 lg:h-screen lg:py-8 lg:px-8;
+}
+
+/* ========================================== TYPOGRAPHY */
+@layer utilities {
+  .wrapper {
+    @apply max-w-6xl mx-auto w-full text-foreground/80 p-16-regular;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary-indigo)), hsl(var(--accent-violet)) 50%, hsl(var(--accent-cyan)));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradientShift 6s ease infinite;
+  }
+
+  /* TYPOGRAPHIC HIERARCHY */
+  .h1-semibold {
+    @apply text-[34px] sm:text-[44px] font-extrabold tracking-tight sm:tracking-tighter leading-[110%] bg-gradient-to-r from-foreground via-foreground/90 to-foreground/75 bg-clip-text text-transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .h2-bold {
+    @apply text-[28px] md:text-[34px] font-extrabold tracking-tight leading-[115%] bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 bg-clip-text text-transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .h3-bold {
+    @apply font-bold tracking-tight text-[22px] leading-[130%] text-foreground/90;
+  }
+
+  .p-24-bold {
+    @apply font-bold text-[22px] leading-[120%] text-foreground/90;
+  }
+
+  .p-20-semibold {
+    @apply font-semibold text-[18px] leading-[135%] text-foreground/90;
+  }
+
+  .p-20-regular {
+    @apply font-normal text-[18px] leading-[135%] text-foreground/70;
+  }
+
+  .p-18-semibold {
+    @apply font-semibold text-[16px] leading-[130%] text-foreground/90;
+  }
+
+  .p-16-semibold {
+    @apply font-semibold text-[15px] leading-[135%] text-foreground/85;
+  }
+
+  .p-16-medium {
+    @apply font-medium text-[15px] leading-[135%] text-foreground/80;
+  }
+
+  .p-16-regular {
+    @apply font-normal text-[15px] leading-[135%] text-muted-foreground;
+  }
+
+  .p-14-medium {
+    @apply font-medium text-[13px] leading-[120%] tracking-wide text-foreground/80;
+  }
+
+  .p-10-medium {
+    @apply font-semibold text-[10px] leading-[140%] tracking-widest uppercase text-muted-foreground;
+  }
+}
+
+/* ========================================== SHADCN OVERRIDES & FORM DESIGN */
+@layer utilities {
+  .button {
+    @apply py-3 px-6 flex justify-center items-center gap-2.5 rounded-xl p-16-semibold border border-border-glass bg-panel-glass backdrop-blur-md shadow-glow-indigo transition-all duration-300 transform-gpu hover:scale-[1.02] hover:border-primary-indigo/30 focus-visible:ring-offset-0 focus-visible:ring-transparent !important;
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .dropdown-content {
+    @apply shadow-2xl rounded-xl border border-border-glass bg-panel-glass backdrop-blur-xl overflow-hidden p-1.5 min-w-[200px] z-50 transition-all duration-300;
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .dropdown-item {
+    @apply p-2.5 p-16-semibold text-foreground/85 cursor-pointer transition-all duration-200 px-4 rounded-lg outline-none hover:bg-primary-indigo/10 hover:text-foreground focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:outline-none !important;
+  }
+
+  /* Form and Select Fields */
+  .input-field {
+    @apply rounded-xl border border-border-glass bg-panel-glass backdrop-blur-md text-foreground placeholder:text-muted-foreground/50 p-16-semibold h-[50px] md:h-[54px] px-4 py-3 transition-all duration-300 shadow-sm focus-visible:ring-2 focus-visible:ring-primary-indigo/30 focus:border-primary-indigo/40 focus-visible:outline-none !important;
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .search-field {
+    @apply border-0 bg-transparent text-foreground placeholder:text-muted-foreground/50 w-full h-[46px] p-16-medium focus-visible:ring-offset-0 focus-visible:ring-transparent focus-visible:outline-none !important;
+  }
+
+  .submit-button {
+    @apply bg-gradient-to-r from-primary-indigo via-accent-violet to-primary-indigo bg-[length:200%_auto] rounded-xl py-3 px-6 text-white font-bold shadow-glow-indigo transition-all duration-500 hover:bg-[right_center] hover:scale-[1.02] active:scale-[0.98] h-[50px] md:h-[54px] w-full flex justify-center items-center border border-white/10;
+  }
+
+  .select-field {
+    @apply w-full border border-border-glass bg-panel-glass backdrop-blur-md rounded-xl h-[50px] md:h-[54px] text-foreground p-16-semibold placeholder:text-muted-foreground/50 px-4 py-3 transition-all duration-300 shadow-sm focus:ring-2 focus:ring-primary-indigo/30 focus:border-primary-indigo/40 focus-visible:outline-none !important;
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .select-trigger {
+    @apply flex items-center gap-2 py-5 capitalize focus-visible:outline-none focus:outline-none;
+  }
+
+  .select-item {
+    @apply py-3 px-4 cursor-pointer hover:bg-primary-indigo/10 rounded-lg text-foreground focus-visible:outline-none focus:outline-none transition-all duration-200;
+  }
+
+  .IconButton {
+    @apply focus-visible:ring-transparent focus:ring-offset-0 focus-visible:ring-offset-0 focus-visible:outline-none focus-visible:border-none hover:bg-primary-indigo/10 rounded-lg transition-all !important;
+  }
+
+  .sheet-content button {
+    @apply focus:ring-0 focus-visible:ring-transparent focus:ring-offset-0 focus-visible:ring-offset-0 focus-visible:outline-none focus-visible:border-none !important;
+  }
+
+  .success-toast {
+    @apply border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl backdrop-blur-md z-[100] shadow-glow-cyan;
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .error-toast {
+    @apply border border-rose-500/20 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-xl backdrop-blur-md z-[100] shadow-lg;
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* ========================================== PAGE SPECIFIC REDESIGNS */
+
+/* --- HOME PAGE BANNER --- */
+@layer utilities {
+ .home {
+  @apply flex justify-center relative min-h-80 flex-col gap-6 rounded-2xl p-8 md:p-12 overflow-hidden select-none transform-gpu;
+}
+
+.home::before {
+  display: none;
+}
+
+  .home-heading {
+    @apply text-[32px] sm:text-[40px] tracking-tight font-extrabold text-center text-white max-w-[700px] leading-[115%] drop-shadow-lg z-10 mx-auto;
+  }
+
+  .home ul {
+    @apply z-10 mt-2;
+  }
+
+  /* Home Banner Navigation Item Quick Actions */
+  .home-action-btn {
+    @apply transition-all duration-300 ease-out-back transform-gpu hover:scale-105;
+  }
+
+  .home-action-icon {
+    @apply flex justify-center items-center rounded-2xl bg-white/10 border border-white/15 p-4 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-glow-cyan;
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* --- DETAILED GENERATION CARDS --- */
+@layer utilities {
+  .collection-heading {
+    @apply flex flex-col gap-5 md:flex-row md:justify-between md:items-center mb-8;
+  }
+
+  .collection-list {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .collection-empty {
+    @apply flex justify-center items-center h-60 w-full rounded-2xl border border-border-glass bg-panel-glass backdrop-blur-sm shadow-inner;
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .collection-btn {
+    @apply py-3 px-6 rounded-xl font-bold bg-gradient-to-r from-primary-indigo to-accent-violet text-white hover:scale-[1.02] active:scale-[0.98] transition-all border border-white/10 shadow-glow-indigo;
+  }
+
+  /* Generation Card wrapper hover scaling and glass integration */
+  .collection-card {
+    @apply flex flex-col gap-4 rounded-2xl border border-border-glass bg-panel-glass backdrop-blur-md p-4 shadow-glow-card transition-all duration-500 ease-out-back transform-gpu hover:scale-[1.02] hover:border-primary-indigo/25 hover:shadow-glow-indigo hover:-translate-y-1;
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* --- SIDEBAR & MOBILE NAVIGATION --- */
+@layer utilities {
+  /* Premium Floating Sidebar Card */
+  .sidebar {
+    @apply hidden h-[calc(100vh-2rem)] w-72 bg-panel-glass border border-border-glass p-5 m-4 rounded-2xl shadow-glow-card lg:flex flex-col justify-between backdrop-blur-xl transition-all duration-500 ease-out-back transform-gpu z-[50] overflow-visible;
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .sidebar-logo {
+    @apply flex items-center gap-2.5 py-3 border-b border-border-glass mb-5;
+  }
+
+  .sidebar-nav {
+    @apply h-full flex flex-col justify-between pr-1;
+  }
+
+  .sidebar-nav_elements {
+    @apply w-full flex flex-col gap-1;
+  }
+
+  /* Nav Links and spring boundaries */
+  .sidebar-nav_element {
+    @apply flex justify-center items-center w-full whitespace-nowrap rounded-xl transition-all duration-300 ease-out-back border border-transparent overflow-hidden;
+  }
+
+  .sidebar-link {
+    @apply p-16-semibold flex size-full gap-3.5 p-3.5 rounded-xl text-foreground/80 hover:text-foreground transition-all duration-300;
+  }
+
+  /* Mobile Nav styles */
+  .header {
+    @apply flex justify-between items-center fixed top-0 h-16 w-full border-b border-border-glass bg-panel-glass backdrop-blur-xl p-5 lg:hidden z-10 shadow-sm;
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .header-nav_elements {
+    @apply mt-6 flex w-full flex-col gap-1.5;
+  }
+
+  .search {
+    @apply flex w-full items-center rounded-xl border border-border-glass bg-panel-glass backdrop-blur-md px-4 shadow-sm focus-within:border-primary-indigo/40 focus-within:ring-2 focus-within:ring-primary-indigo/25 md:max-w-96 transition-all duration-300;
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* --- CREDITS PACKAGES (PRICING) --- */
+@layer utilities {
+  .credits-list {
+    @apply mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 xl:grid-cols-3;
+  }
+
+  .credits-item {
+    @apply w-full rounded-2xl border border-border-glass bg-panel-glass p-8 shadow-glow-card hover:shadow-glow-indigo transition-all duration-500 ease-out-back hover:scale-[1.02] hover:-translate-y-1 hover:border-primary-indigo/20 flex flex-col justify-between relative overflow-hidden;
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .credits-btn {
+    @apply w-full rounded-xl bg-gradient-to-r from-primary-indigo/10 to-accent-violet/10 border border-primary-indigo/20 text-primary-indigo font-bold py-3 hover:from-primary-indigo hover:to-accent-violet hover:text-white hover:border-transparent transition-all duration-300 shadow-sm;
+  }
+
+  /* PRO PACKAGE PREMIUM ANIMATED BORDER WITH POINTER EVENTS SAFEGUARDS */
+  .pro-glowing-card {
+    position: relative;
+    border: none !important;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--panel-glass)) 100%) !important;
+    box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.25) !important;
+  }
+
+  .pro-glowing-card::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, hsl(var(--primary-indigo)) 0%, hsl(var(--accent-violet)) 50%, hsl(var(--accent-cyan)) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+    animation: borderGradientShift 4s linear infinite;
+  }
+}
+
+/* --- CREATOR PROFILE --- */
+@layer utilities {
+  .profile {
+    @apply mt-6 flex flex-col gap-5 sm:flex-row md:mt-8 md:gap-8;
+  }
+
+  .profile-balance {
+    @apply w-full rounded-2xl border border-border-glass bg-panel-glass backdrop-blur-md p-6 shadow-glow-card hover:border-primary-indigo/20 hover:shadow-glow-indigo transition-all duration-300 transform-gpu;
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .profile-image-manipulation {
+    @apply w-full rounded-2xl border border-border-glass bg-panel-glass backdrop-blur-md p-6 shadow-glow-card hover:border-accent-cyan/20 hover:shadow-glow-cyan transition-all duration-300 transform-gpu;
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* --- TRANSFORMATION DETAILS & VISUAL COMPATIBILITY --- */
+@layer utilities {
+ .transformation-grid {
+  @apply grid h-fit min-h-[200px] grid-cols-1 gap-6 py-8 md:grid-cols-2 items-start;
+}
+
+  .transformation-original_image {
+    @apply h-fit min-h-72 w-full rounded-xl border border-dashed border-primary-indigo/20 bg-panel-glass object-cover p-2 shadow-glow-card transition-all duration-300 transform-gpu;
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .download-btn {
+    @apply p-14-medium mt-3 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border-glass bg-panel-glass backdrop-blur-md hover:bg-primary-indigo hover:text-white transition-all duration-200 shadow-sm cursor-pointer;
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .transformed-image {
+    @apply h-fit min-h-72 w-full rounded-xl border border-dashed border-primary-indigo/20 bg-panel-glass object-cover p-2 shadow-glow-card transition-all duration-300 transform-gpu;
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .transforming-loader {
+    @apply flex justify-center items-center absolute inset-0 size-full flex-col gap-3 rounded-2xl border border-border-glass bg-background/90 backdrop-blur-md z-20 transition-all;
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .transformed-placeholder {
+    @apply flex justify-center items-center p-14-medium h-full min-h-72 flex-col gap-4 rounded-2xl border border-dashed border-primary-indigo/20 bg-panel-glass backdrop-blur-md shadow-glow-card;
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* --- MEDIA UPLOADER --- */
+@layer utilities {
+  .media-uploader_cta {
+    @apply flex justify-center items-center flex-col gap-5 rounded-2xl border border-dashed border-primary-indigo/25 bg-panel-glass backdrop-blur-md shadow-glow-card transition-all duration-300 transform-gpu hover:border-primary-indigo/55 hover:bg-primary-indigo/5 cursor-pointer;
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Specific Drag-over and Hover elastic actions */
+  .media-uploader_cta:active {
+    @apply scale-[0.98] border-primary-indigo/60;
+  }
+
+  .media-uploader_cta-image {
+    @apply rounded-xl bg-background p-4 shadow-glow-card border border-border-glass transition-transform duration-300;
+  }
+}
+
+/* ========================================== CLERK LOGIN WIDGETS OVERRIDES */
+.cl-userButtonBox {
+  display: flex;
+  flex-flow: row-reverse;
+  gap: 12px;
+}
+
+.cl-userButtonOuterIdentifier {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: hsl(var(--foreground)) !important;
+  letter-spacing: 0.02em;
+}
+
+.cl-card {
+  @apply rounded-2xl border border-border-glass bg-panel-glass backdrop-blur-xl shadow-glow-indigo p-6 !important;
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.cl-headerTitle {
+  @apply h2-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 bg-clip-text text-transparent !important;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cl-headerSubtitle {
+  @apply p-16-regular font-medium text-foreground/50 mt-1 !important;
+}
+
+.cl-socialButtonsIconButton {
+  @apply border border-border-glass bg-background hover:bg-primary-indigo/10 rounded-xl transition-all duration-200 !important;
+}
+
+.cl-formButtonPrimary {
+  @apply bg-gradient-to-r from-primary-indigo to-accent-violet hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl border border-white/10 shadow-glow-indigo font-bold !important;
+}
+
+.cl-formFieldInput {
+  @apply rounded-xl border border-border-glass bg-background text-foreground focus:border-primary-indigo/50 transition-all duration-300 !important;
+}
+
+/* ========================================== ACCESSIBILITY & REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+
+  .pro-glowing-card::before {
+    animation: none !important;
+  }
+
+  .gradient-text {
+    animation: none !important;
+    background: linear-gradient(135deg, hsl(var(--primary-indigo)), hsl(var(--accent-violet))) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .sidebar-nav_element, 
+  .collection-card, 
+  .credits-item, 
+  .media-uploader_cta, 
+  .home-action-btn {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ========================================== STACKING ORDER (Z-INDEX CONTROLS) */
+.z-bg-glows      { z-index: -20; }
+.z-content-grid  { z-index: 0; }
+.z-nav-headers   { z-index: 10; }
+.z-action-loader { z-index: 20; }
+.z-modals        { z-index: 40; }
+.z-sheets        { z-index: 50; }
+.z-toasts        { z-index: 100; }
+
+/* ========================================== KEYFRAMES */
+@keyframes textGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes borderGradientShift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.media-uploader-field {
+  @apply grid grid-cols-1 gap-6 md:grid-cols-2 items-start;
+}
+.cl-userButtonPopoverCard {
+  @apply border border-border-glass shadow-2xl !important;
+  background: hsl(var(--card)) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.cl-userButtonPopoverActionButton {
+  @apply hover:bg-primary-indigo/10 !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.cl-userButtonPopoverActionButtonText {
+  color: hsl(var(--foreground)) !important;
+}
+
+.cl-userButtonPopoverActionButtonIcon {
+  color: hsl(var(--foreground)) !important;
+}
+
+.cl-userButtonPopoverFooter {
+  @apply border-t border-border-glass !important;
+}
+
+.cl-userPreviewMainIdentifier {
+  color: hsl(var(--foreground)) !important;
+}
+
+.cl-userPreviewSecondaryIdentifier {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+
+/* Fixes the large Section Headings ("Account", "Security") */
+.cl-headerTitle, 
+.cl-profileSectionTitleText {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Fixes Subtitles and Section Descriptions */
+.cl-headerSubtitle {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Fixes the Option Field Labels ("Profile", "Email addresses", "Connected accounts") */
+.cl-formLabelText {
+  color: hsl(var(--foreground)) !important;
+  opacity: 0.9;
+}
+
+/* Fixes interactive list details and link text indicators */
+.cl-userDataTable,
+.cl-accordionTriggerButton,
+.cl-profilePage {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Fixes Left Modal Sidebar Nav item labels */
+.cl-navbarButton {
+  color: hsl(var(--muted-foreground)) !important;
+}
+.cl-navbarButton[data-active="true"] {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Force style overrides inside the Clerk User Profile Modal container */
+.cl-userProfile-root, .cl-card {
+  
+  /* Targets the "Delete Account" title text directly */
+  & .cl-profileSectionDangerRegionTitleText {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Targets the "Delete your account and all associated data" text */
+  & .cl-profileSectionDangerRegionDescriptionText {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+
+  /* Catch-all for any fallback danger/alert strings */
+  & .cl-dangerText {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+}
