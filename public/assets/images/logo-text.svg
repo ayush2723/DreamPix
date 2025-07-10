@@ -1,0 +1,9 @@
+<svg width="168" height="27" viewBox="0 0 168 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="0" y="22" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="url(#grad)">DreamPix</text>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="168" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4318FF"/>
+      <stop offset="100%" stop-color="#0D9AFF"/>
+    </linearGradient>
+  </defs>
+</svg>
