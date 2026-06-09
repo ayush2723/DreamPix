@@ -45,7 +45,7 @@ const Checkout = ({
         className: "error-toast",
       });
     }
-  }, []);
+  }, [toast]); 
 
   const onCheckout = async () => {
     const transaction = {
@@ -55,7 +55,7 @@ const Checkout = ({
       buyerId,
     };
 
-    await checkoutCredits(transaction);
+  await checkoutCredits(transaction);
   };
 
   return (

@@ -58,7 +58,8 @@ export const Collection = ({
       {images.length > 0 ? (
         <ul className="collection-list">
           {images.map((image) => (
-            <Card image={image} key={image._id} />
+            // FIX 1: Convert key _id to string
+            <Card image={image} key={image._id.toString()} />
           ))}
         </ul>
       ) : (
@@ -101,7 +102,8 @@ const Card = ({ image }: { image: IImage }) => {
 
   return (
     <li className="list-none">
-      <Link href={`/transformations/${image._id}`} className="collection-card group overflow-hidden relative">
+      {/* FIX 2: Convert href dynamic segment _id to string */}
+      <Link href={`/transformations/${image._id.toString()}`} className="collection-card group overflow-hidden relative">
         
         {/* Frame container with smooth overflow hiding */}
         <div className="relative h-56 w-full rounded-xl overflow-hidden bg-muted border border-glass transform-gpu">
