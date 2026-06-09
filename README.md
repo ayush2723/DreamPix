@@ -13,8 +13,6 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)](https://clerk.com/)
 
-[Live Demo](#) · [Report Bug](https://github.com/yourusername/dreampix/issues) · [Request Feature](https://github.com/yourusername/dreampix/issues)
-
 </div>
 
 ---
@@ -30,10 +28,8 @@
 7. [Project Structure](#-project-structure)
 8. [Core Modules](#-core-modules)
 9. [AI Transformations](#-ai-transformations)
-10. [Credits System](#-credits-system)
-11. [Deployment](#-deployment)
-12. [Contributing](#-contributing)
-13. [License](#-license)
+10. [Deployment](#-deployment)
+11. [Contributing](#-contributing)
 
 ---
 
@@ -448,37 +444,9 @@ All transformations are powered by **Cloudinary's AI API**. Each transformation 
    └── 1 credit deducted from user balance
 ```
 
----
 
-## 💰 Credits System
 
-DreamPix uses a credit-based system to manage API usage costs.
 
-### Plans
-
-| Plan | Price | Credits | Features |
-|---|---|---|---|
-| **Free** | $0 | 20 | Basic access |
-| **Pro** | $40 | 120 | Full access + Priority Support |
-| **Premium** | $199 | 2000 | Full access + Priority Support + Priority Updates |
-
-### Credit Flow
-
-```
-New User Signs Up
-└── 10 free credits granted (via MongoDB default)
-
-User Applies Transformation
-└── creditFee = -1 applied via updateCredits()
-└── MongoDB: { $inc: { creditBalance: -1 } }
-
-User Purchases Credits
-└── Stripe Checkout Session created
-└── User redirected to Stripe payment page
-└── On success: Stripe webhook fires
-└── createTransaction() called
-└── creditBalance incremented by purchased amount
-```
 
 ---
 
@@ -530,22 +498,6 @@ Contributions are welcome! Please follow these steps:
 - Keep components small and focused on a single responsibility
 - Server Actions for all data mutations
 - Client Components only where interactivity is required
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgements
-
-- [JavaScript Mastery](https://www.youtube.com/@javascriptmastery) — Original project inspiration
-- [Cloudinary](https://cloudinary.com) — AI image transformation APIs
-- [Clerk](https://clerk.com) — Authentication infrastructure
-- [Shadcn/UI](https://ui.shadcn.com) — UI component library
-- [Vercel](https://vercel.com) — Deployment platform
 
 ---
 
