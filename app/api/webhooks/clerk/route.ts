@@ -61,12 +61,15 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
 
+    // 🛠️ FALLBACK LOGIC: If username doesn't exist, create one from their name or a slice of their ID
+    const fallbackUsername = username || `${first_name || "user"}_${id ? id.slice(-6) : Math.floor(Math.random() * 1000)}`;
+
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      username: username!,
-      firstName: first_name,
-      lastName: last_name,
+      username: fallbackUsername, // Use fallback here
+      firstName: first_name || "",
+      lastName: last_name || "",
       photo: image_url,
     };
 
@@ -74,7 +77,7 @@ export async function POST(req: Request) {
 
     // Set public metadata
     if (newUser) {
-      await clerkClient.users.updateUserMetadata(id, {
+      await clerkClient.users.updateUserMetadata(id!, {
         publicMetadata: {
           userId: newUser._id,
         },
@@ -88,14 +91,17 @@ export async function POST(req: Request) {
   if (eventType === "user.updated") {
     const { id, image_url, first_name, last_name, username } = evt.data;
 
+    // 🛠️ FALLBACK LOGIC: Ensure fallback happens on updates too just in case
+    const fallbackUsername = username || `${first_name || "user"}_${id ? id.slice(-6) : Math.floor(Math.random() * 1000)}`;
+
     const user = {
-      firstName: first_name,
-      lastName: last_name,
-      username: username!,
+      firstName: first_name || "",
+      lastName: last_name || "",
+      username: fallbackUsername, // Use fallback here
       photo: image_url,
     };
 
-    const updatedUser = await updateUser(id, user);
+    const updatedUser = await updateUser(id!, user);
 
     return NextResponse.json({ message: "OK", user: updatedUser });
   }
