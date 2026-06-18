@@ -2,11 +2,11 @@
 
 // ====== USER PARAMS
 declare type CreateUserParams = {
-  clerkId: string;
   email: string;
+  password?: string;
   username: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   photo: string;
 };
 
