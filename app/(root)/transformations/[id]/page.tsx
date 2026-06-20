@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 
 import Header from "@/components/shared/Header";
@@ -8,7 +9,7 @@ import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import { DownloadButton } from "@/components/shared/DownloadButton";
 
 const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
-  const { userId } = auth();
+  const session = await getServerSession(authOptions);
 
   const image = await getImageById(id);
 
@@ -92,7 +93,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
      </div>
    </div>
 </div>
-        {userId === image.author.clerkId && (
+        {session?.user?.id === image.author._id.toString() && (
           <div className="mt-4 space-y-4">
             <Button asChild type="button" className="submit-button capitalize">
               <Link href={`/transformations/${image._id}/update`}>

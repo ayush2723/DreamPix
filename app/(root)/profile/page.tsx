@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -9,11 +10,11 @@ import { getUserById } from "@/lib/actions/user.actions";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
-  const { userId } = auth();
+  const session = await getServerSession(authOptions);
 
-  if (!userId) redirect("/sign-in");
+  if (!session) redirect("/sign-in");
 
-  const user = await getUserById(userId);
+  const user = await getUserById(session.user.id);
   const images = await getUserImages({ page, userId: user._id });
 
   return (
