@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ThemeProvider } from "@/components/shared/ThemeContext";
 
 import "./globals.css";
@@ -23,51 +23,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{
-      variables: { 
-        colorPrimary: '#6366f1',
-        fontFamily: 'var(--font-plus-jakarta)',
-        borderRadius: '12px'
-      },
-      elements: {
-        card: "cl-card",
-        headerTitle: "cl-headerTitle",
-        headerSubtitle: "cl-headerSubtitle",
-        socialButtonsIconButton: "cl-socialButtonsIconButton",
-        formButtonPrimary: "cl-formButtonPrimary",
-        formFieldInput: "cl-formFieldInput",
-        footerActionLink: "text-primary-indigo hover:text-accent-violet transition-colors duration-200",
-        userButtonBox: "cl-userButtonBox",
-        userButtonOuterIdentifier: "cl-userButtonOuterIdentifier"
-      }
-    }}>
-      <html lang="en" suppressHydrationWarning>
-        <head>
-          <script dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var storedTheme = localStorage.getItem('theme');
-                  var theme = storedTheme;
-                  if (!theme) {
-                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                  }
-                  if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {}
-              })();
-            `
-          }} />
-        </head>
-        <body className={cn("font-PlusJakarta antialiased", plusJakarta.variable)}>
-          <ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                var storedTheme = localStorage.getItem('theme');
+                var theme = storedTheme;
+                if (!theme) {
+                  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {}
+            })();
+          `
+        }} />
+      </head>
+      <body className={cn("font-PlusJakarta antialiased", plusJakarta.variable)}>
+        <ThemeProvider>
+          <AuthProvider>
             {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
